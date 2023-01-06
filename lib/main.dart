@@ -1,12 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tradecalc/styles/my_text.dart';
-import 'styles/my_button.dart';
-import 'notifications/my_custom_notification.dart';
 
+import 'notifications/my_custom_notification.dart';
+import 'styles/my_button.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,21 +41,13 @@ class MyAppState extends State<MyApp> {
       capitalAfterProfitToString = '';
 
   List<String> valuesAfterCalc = [];
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
 
-  final MyNotifications myNotifications = MyNotifications();
+  MyNotifications myNotifications = MyNotifications();
 
   @override
   void initState() {
     super.initState();
-
-    var androidInit = const AndroidInitializationSettings('app_icon');
-    var initSettings = InitializationSettings(android: androidInit);
-
-    flutterLocalNotificationsPlugin.initialize(
-      initSettings,
-    );
+    myNotifications.notificationInitialization();
   }
 
   void resetCalculations() {
@@ -173,7 +163,6 @@ class MyAppState extends State<MyApp> {
 
   List<String> calculateTarget(String tradingCapitalParam,
       String riskToRewardParam, String stopLossParam) {
-
     if (tradingCapitalParam.isNotEmpty &&
         riskToRewardParam.isNotEmpty &&
         stopLossParam.isNotEmpty) {
@@ -203,7 +192,7 @@ class MyAppState extends State<MyApp> {
 
       if (capitalAfterProfit >= 100000 && capitalAfterProfit < 10000000) {
         capitalAfterProfitToString =
-        '${(capitalAfterProfit.roundToDouble() / 100000).round().toString()} Lakhs';
+            '${(capitalAfterProfit.roundToDouble() / 100000).round().toString()} Lakhs';
       }
 
       if (profit >= 10000000) {
@@ -216,7 +205,7 @@ class MyAppState extends State<MyApp> {
 
       if (capitalAfterProfit >= 10000000) {
         capitalAfterProfitToString =
-        '${(capitalAfterProfit / 10000000).toString().substring(0, 3)} Crores';
+            '${(capitalAfterProfit / 10000000).toString().substring(0, 3)} Crores';
       }
 
       if (profit < 100000) {
@@ -576,7 +565,7 @@ class MyAppState extends State<MyApp> {
                                   style: MyButtonStyle.myButtonStyle,
                                   onPressed: deleteLeftFn,
                                   child:
-                                  const FaIcon(FontAwesomeIcons.deleteLeft),
+                                      const FaIcon(FontAwesomeIcons.deleteLeft),
                                 ),
                               ),
                               Container(
