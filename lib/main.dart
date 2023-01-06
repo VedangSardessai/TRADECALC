@@ -8,10 +8,6 @@ import 'styles/my_button.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
   runApp(
     const MyApp(),
   );
@@ -51,16 +47,18 @@ class MyAppState extends State<MyApp> {
   }
 
   void resetCalculations() {
-    // setState(() {
-    profitToString = '';
-    lossString = '';
-    returnsToString = '';
-    capitalAfterProfitToString = '';
+    if (mounted) {
+      setState(() {
+        profitToString = '';
+        lossString = '';
+        returnsToString = '';
+        capitalAfterProfitToString = '';
 
-    isInputRiskToRewardEntered = false;
-    isInputStopLossEntered = false;
-    isInputTradeCapitalEntered = false;
-    // });
+        isInputRiskToRewardEntered = false;
+        isInputStopLossEntered = false;
+        isInputTradeCapitalEntered = false;
+      });
+    }
   }
 
   String inputtingTradeCapital(String number) {
@@ -92,10 +90,11 @@ class MyAppState extends State<MyApp> {
         stopLoss += number;
       }
 
-      setState(() {
-        isInputStopLossEntered = true;
-      });
-
+      if (mounted) {
+        setState(() {
+          isInputStopLossEntered = true;
+        });
+      }
       input = stopLoss;
     }
 
@@ -125,40 +124,58 @@ class MyAppState extends State<MyApp> {
     return input;
   }
 
-  void clearInput() {
-    // setState(() {
-    if (isInputTradeCapital) {
-      tradeCapital = '';
-    }
+  String clearInput() {
+    String clearedInput = '';
 
-    if (isInputStopLoss) {
-      stopLoss = '';
-    }
+    if (mounted) {
+      setState(() {
+        if (isInputTradeCapital) {
+          tradeCapital = '';
+          clearedInput = tradeCapital;
+        }
 
-    if (isInputRiskToReward) {
-      riskToReward = '';
-    }
+        if (isInputStopLoss) {
+          stopLoss = '';
+          clearedInput = stopLoss;
+        }
 
-    resetCalculations();
-    // });
+        if (isInputRiskToReward) {
+          riskToReward = '';
+          clearedInput = riskToReward;
+        }
+
+        resetCalculations();
+      });
+    }
+    return clearedInput;
   }
 
-  void deleteLeftFn() {
-    setState(() {
-      if (tradeCapital.isNotEmpty && isInputTradeCapital) {
-        tradeCapital = tradeCapital.substring(0, tradeCapital.length - 1);
-      }
+  String deleteLeftFn() {
+    String newStr = '';
+    if(mounted){
+      setState(() {
+        if (tradeCapital.isNotEmpty && isInputTradeCapital) {
+          tradeCapital = tradeCapital.substring(0, tradeCapital.length - 1);
+          newStr = tradeCapital;
+        }
 
-      if (riskToReward.isNotEmpty && isInputRiskToReward) {
-        riskToReward = riskToReward.substring(0, riskToReward.length - 1);
-      }
+        if (riskToReward.isNotEmpty && isInputRiskToReward) {
+          riskToReward = riskToReward.substring(0, riskToReward.length - 1);
+          newStr = riskToReward;
 
-      if (stopLoss.isNotEmpty && isInputStopLoss) {
-        stopLoss = stopLoss.substring(0, stopLoss.length - 1);
-      }
+        }
 
-      resetCalculations();
-    });
+        if (stopLoss.isNotEmpty && isInputStopLoss) {
+          stopLoss = stopLoss.substring(0, stopLoss.length - 1);
+          newStr = stopLoss;
+
+        }
+
+        resetCalculations();
+      });
+    }
+
+    return newStr;
   }
 
   List<String> calculateTarget(String tradingCapitalParam,
