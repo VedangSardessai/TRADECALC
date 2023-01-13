@@ -1,4 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_fcm/flutter_fcm.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 
 class MyNotifications {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -7,16 +10,31 @@ class MyNotifications {
   final AndroidInitializationSettings _androidInitializationSettings =
       const AndroidInitializationSettings('logo');
 
-  void notificationInitialization() async {
-    InitializationSettings initializationSettings = InitializationSettings(
-      android: _androidInitializationSettings,
-    );
+  static String? token;
 
-    _flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    print('Initialization done');
+  static initFCM() async {
+    try {
+      await FCM.initializeFCM(
+          onNotificationPressed: (Map<String, dynamic> data) {
+            print('onNotificationPressed : $data');
+          },
+          onTokenChanged: (String? token) {
+            MyNotifications.token = token!;
+            print('onTokenChanged : $token');
+          },
+          onNotificationReceived: (RemoteMessage message) {
+            print('onNotificationReceived $message');
+            throw ('hello');
+          },
+          icon: 'logo');
+    } catch (e) {
+      print('Error on line 29 : ${e}');
+    }
   }
 
   void showTextNotification(String title, String body) async {
+    // initializeFirebasePushNotification();
+
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails(
       'channelId',

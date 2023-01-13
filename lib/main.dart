@@ -1,13 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tradecalc/styles/my_text.dart';
-
+import 'firebase_options.dart';
 import 'notifications/my_custom_notification.dart';
 import 'styles/my_button.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  MyNotifications.initFCM();
+
   runApp(
     const MyApp(),
   );
@@ -43,7 +50,6 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    myNotifications.notificationInitialization();
   }
 
   void resetCalculations() {
@@ -152,7 +158,7 @@ class MyAppState extends State<MyApp> {
 
   String deleteLeftFn() {
     String newStr = '';
-    if(mounted){
+    if (mounted) {
       setState(() {
         if (tradeCapital.isNotEmpty && isInputTradeCapital) {
           tradeCapital = tradeCapital.substring(0, tradeCapital.length - 1);
@@ -162,13 +168,11 @@ class MyAppState extends State<MyApp> {
         if (riskToReward.isNotEmpty && isInputRiskToReward) {
           riskToReward = riskToReward.substring(0, riskToReward.length - 1);
           newStr = riskToReward;
-
         }
 
         if (stopLoss.isNotEmpty && isInputStopLoss) {
           stopLoss = stopLoss.substring(0, stopLoss.length - 1);
           newStr = stopLoss;
-
         }
 
         resetCalculations();
@@ -199,41 +203,9 @@ class MyAppState extends State<MyApp> {
 
       returns = (100 * profit / convertedTradingCapital).roundToDouble();
 
-      if (profit >= 100000 && profit < 10000000) {
-        profitToString = '${(profit / 100000).round().toString()} Lakhs';
-      }
-
-      if (loss >= 100000 && loss < 10000000) {
-        lossString = '${(loss / 100000).round().toString()} Lakhs';
-      }
-
-      if (capitalAfterProfit >= 100000 && capitalAfterProfit < 10000000) {
-        capitalAfterProfitToString =
-            '${(capitalAfterProfit.roundToDouble() / 100000).round().toString()} Lakhs';
-      }
-
-      if (profit >= 10000000) {
-        profitToString = '${(profit / 10000000).round().toString()} Crores';
-      }
-
-      if (loss >= 10000000) {
-        lossString = '${(loss / 10000000).round().toString()} Crores';
-      }
-
-      if (capitalAfterProfit >= 10000000) {
-        capitalAfterProfitToString =
-            '${(capitalAfterProfit / 10000000).toString().substring(0, 3)} Crores';
-      }
-
-      if (profit < 100000) {
-        profitToString = profit.toString();
-      }
-      if (loss < 100000) {
-        lossString = loss.toString();
-      }
-      if (capitalAfterProfit < 100000) {
-        capitalAfterProfitToString = capitalAfterProfit.toString();
-      }
+      profitToString = profit.toString();
+      lossString = loss.toString();
+      capitalAfterProfitToString = capitalAfterProfit.toString();
 
       returnsToString = returns.toString();
       if (mounted) {
@@ -413,18 +385,16 @@ class MyAppState extends State<MyApp> {
                               fontSize: size.width * .036, color: Colors.green),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Capital After Profit = $capitalAfterProfitToString',
-                          style: GoogleFonts.poppins(
-                              fontSize: size.width * .036, color: Colors.green),
-                        ),
-                      )
                     ],
                   ),
-                  Container(
-                    height: 20,
+                  Row(
+                    children: [
+                      Text(
+                        'Capital After Profit = $capitalAfterProfitToString',
+                        style: GoogleFonts.poppins(
+                            fontSize: size.width * .036, color: Colors.green),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [
