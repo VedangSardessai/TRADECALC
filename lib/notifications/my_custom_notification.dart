@@ -7,9 +7,6 @@ class MyNotifications {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  final AndroidInitializationSettings _androidInitializationSettings =
-      const AndroidInitializationSettings('logo');
-
   static String? token;
 
   static initFCM() async {
