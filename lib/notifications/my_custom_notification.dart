@@ -2,7 +2,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_fcm/flutter_fcm.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
 class MyNotifications {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -10,23 +9,15 @@ class MyNotifications {
   static String? token;
 
   static initFCM() async {
-    try {
-      await FCM.initializeFCM(
-          onNotificationPressed: (Map<String, dynamic> data) {
-            print('onNotificationPressed : $data');
-          },
-          onTokenChanged: (String? token) {
-            MyNotifications.token = token!;
-            print('onTokenChanged : $token');
-          },
-          onNotificationReceived: (RemoteMessage message) {
-            print('onNotificationReceived $message');
-            throw ('hello');
-          },
-          icon: 'logo');
-    } catch (e) {
-      print('Error on line 29 : ${e}');
-    }
+    await FCM.initializeFCM(
+        onNotificationPressed: (Map<String, dynamic> data) {},
+        onTokenChanged: (String? token) {
+          MyNotifications.token = token!;
+        },
+        onNotificationReceived: (RemoteMessage message) {
+          throw ('hello');
+        },
+        icon: 'logo');
   }
 
   void showTextNotification(String title, String body) async {

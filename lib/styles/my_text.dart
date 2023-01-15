@@ -6,7 +6,7 @@ class MyTextStyles extends StatelessWidget {
   final String input;
 
 
- MyTextStyles(this.input);
+ const MyTextStyles(this.input, {super.key});
 
   @override
   Widget build(BuildContext context) {

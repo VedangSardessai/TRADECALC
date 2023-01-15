@@ -13,8 +13,6 @@ Future main() async {
   void instanceId() async {
     FirebaseMessaging.instance.getInitialMessage();
     FirebaseMessaging.instance.sendMessage();
-    var token = await FirebaseMessaging.instance.getToken();
-    print("Print Instance Token ID:  ${token!}");
   }
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -236,9 +234,7 @@ class MyAppState extends State<MyApp> {
           );
         });
       }
-    } else {
-      print('These parameters are required 201');
-    }
+    } else {}
 
     valuesAfterCalc.add(lossString);
     valuesAfterCalc.add(profitToString);
@@ -395,12 +391,10 @@ class MyAppState extends State<MyApp> {
                   ),
                   Row(
                     children: [
-                      Container(
-                        child: Text(
-                          'Returns % =  ${returnsToString}',
-                          style: GoogleFonts.poppins(
-                              fontSize: size.width * .036, color: Colors.green),
-                        ),
+                      Text(
+                        'Returns % =  $returnsToString',
+                        style: GoogleFonts.poppins(
+                            fontSize: size.width * .036, color: Colors.green),
                       ),
                     ],
                   ),
@@ -422,7 +416,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('7'),
-                          child: MyTextStyles('7'),
+                          child: const MyTextStyles('7'),
                         ),
                       ),
                       Container(
@@ -432,7 +426,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('8'),
-                          child: MyTextStyles('8'),
+                          child: const MyTextStyles('8'),
                         ),
                       ),
                       Container(
@@ -442,7 +436,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('9'),
-                          child: MyTextStyles('9'),
+                          child: const MyTextStyles('9'),
                         ),
                       ),
                     ],
@@ -456,7 +450,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('4'),
-                          child: MyTextStyles('4'),
+                          child: const MyTextStyles('4'),
                         ),
                       ),
                       Container(
@@ -466,7 +460,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('5'),
-                          child: MyTextStyles('5'),
+                          child: const MyTextStyles('5'),
                         ),
                       ),
                       Container(
@@ -476,7 +470,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('6'),
-                          child: MyTextStyles('6'),
+                          child: const MyTextStyles('6'),
                         ),
                       ),
                     ],
@@ -490,7 +484,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('1'),
-                          child: MyTextStyles('1'),
+                          child: const MyTextStyles('1'),
                         ),
                       ),
                       Container(
@@ -500,7 +494,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('2'),
-                          child: MyTextStyles('2'),
+                          child: const MyTextStyles('2'),
                         ),
                       ),
                       Container(
@@ -510,7 +504,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('3'),
-                          child: MyTextStyles('3'),
+                          child: const MyTextStyles('3'),
                         ),
                       ),
                     ],
@@ -524,7 +518,7 @@ class MyAppState extends State<MyApp> {
                         child: ElevatedButton(
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => inputtingTradeCapital('0'),
-                          child: MyTextStyles('0'),
+                          child: const MyTextStyles('0'),
                         ),
                       ),
 
@@ -536,7 +530,7 @@ class MyAppState extends State<MyApp> {
                           style: MyButtonStyle.myButtonStyle,
                           onPressed: () => calculateTarget(
                               tradeCapital, riskToReward, stopLoss),
-                          child: MyTextStyles('='),
+                          child: const MyTextStyles('='),
                         ),
                       ),
                       // Container(
@@ -549,11 +543,11 @@ class MyAppState extends State<MyApp> {
                       //   child: ElevatedButton(
                       //     style: MyButtonStyle.myButtonStyle,
                       //     onPressed: () => inputtingTradeCapital('.'),
-                      //     child: MyTextStyles('.'),
+                      //     child: const MyTextStyles('.'),
                       //   ),
                       // ),
 
-                      Container(
+                      SizedBox(
                         width: size.width * .3,
                         height: size.height * .14,
                         // padding: const EdgeInsets.all(8.0),
@@ -579,7 +573,7 @@ class MyAppState extends State<MyApp> {
                                 child: ElevatedButton(
                                   style: MyButtonStyle.myButtonStyle,
                                   onPressed: clearInput,
-                                  child: MyTextStyles('C'),
+                                  child: const MyTextStyles('C'),
                                 ),
                               ),
                             ],
