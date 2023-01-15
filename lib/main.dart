@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,13 +10,26 @@ import 'notifications/my_custom_notification.dart';
 import 'styles/my_button.dart';
 
 Future main() async {
+  void instanceId() async {
+    FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.instance.sendMessage();
+    var token = await FirebaseMessaging.instance.getToken();
+    print("Print Instance Token ID:  ${token!}");
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   MyNotifications.initFCM();
+  instanceId();
 
+  FirebaseInAppMessaging.instance.triggerEvent("");
+
+  FirebaseMessaging.instance.sendMessage();
+
+  FirebaseMessaging.instance.getInitialMessage();
   runApp(
     const MyApp(),
   );
@@ -367,7 +382,9 @@ class MyAppState extends State<MyApp> {
                             'Loss = $lossString',
                             textAlign: TextAlign.left,
                             style: GoogleFonts.poppins(
-                                fontSize: size.width * .034, color: Colors.red),
+                              fontSize: size.width * .034,
+                              color: Colors.red,
+                            ),
                           ),
                         ],
                       )
